@@ -47,7 +47,7 @@ App.Router.map(function() {
   	this.resource("page", { path: "/page/:lang" });
 });
 
-App.Translatable = Ember.Mixin.create({
+App.TrRoute = Em.Route.extend({
 	model: function() {
     	return App.Trans;
   	},
@@ -62,17 +62,9 @@ App.Translatable = Ember.Mixin.create({
   	}
 });
 
-// App.WRoute = Em.Route.extend({
-// 	model: function() {
-//     	return App.Trans;
-//   	},
-// });
-
-App.ApplicationRoute = Em.Route.extend(App.Translatable, {
-});
-
-App.IndexRoute = Em.Route.extend(App.Translatable, {});
-App.PageRoute = Em.Route.extend(App.Translatable, {
+App.ApplicationRoute = App.TrRoute.extend({});
+App.IndexRoute = App.TrRoute.extend({});
+App.PageRoute = App.TrRoute.extend({
 	model: function(){
 		return {
 			page: "Hello from page model"
