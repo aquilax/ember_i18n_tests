@@ -18,13 +18,6 @@ var App = Em.Application.create({
 	}
 });
 
-App.Trans = Em.Object.create({
-	unknownProperty: function(key) {
-		this[key] = key;
-		return this[key];
-	}
-});
-
 Em.Application.initializer({
 	name: 'preload',
 
@@ -44,13 +37,30 @@ Em.Application.initializer({
 
 
 App.Router.map(function() {
+	this.resource("lan", { path: "/lan" });
   	this.resource("page", { path: "/page/:lang" });
 });
 
-App.TrRoute = Em.Route.extend({
+App.Trans = Em.Object.create({
+	unknownProperty: function(key) {
+		this[key] = key;
+		return this[key];
+	}
+});
+
+App.LanRoute = Em.Route.extend({
 	model: function() {
-    	return App.Trans;
-  	},
+		return App.Trans;
+	}
+})
+
+App.TRoute = Em.Route.extend({
+    afterModel: function() {
+        this.set('l', this.modelFor('lan'));
+    }
+});
+
+App.ApplicationRoute = App.TRoute.extend({
   	actions: {
   		lang: function(lang) {
   			App.getTranslation(lang).then(function(){
@@ -59,12 +69,18 @@ App.TrRoute = Em.Route.extend({
 	  			});  				
   			});
   		}
-  	}
+  	},
 });
 
-App.ApplicationRoute = App.TrRoute.extend({});
-App.IndexRoute = App.TrRoute.extend({});
-App.PageRoute = App.TrRoute.extend({
+App.IndexRoute = App.TRoute.extend({
+	model: function(){
+		return {
+			page: "Hello from index model"
+		}
+	}
+});
+
+App.PageRoute = App.TRoute.extend({
 	model: function(){
 		return {
 			page: "Hello from page model"
