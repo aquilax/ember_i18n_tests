@@ -18,13 +18,6 @@ var App = Em.Application.create({
 	}
 });
 
-App.Trans = Em.Object.create({
-	unknownProperty: function(key) {
-		this[key] = key;
-		return this[key];
-	}
-});
-
 Em.Application.initializer({
 	name: 'preload',
 
@@ -42,53 +35,33 @@ Em.Application.initializer({
 	}
 });
 
-
 App.Router.map(function() {
   	this.resource("page", { path: "/page/:lang" });
 });
 
-App.Translatable = Ember.Mixin.create({
-	model: function() {
-    	return App.Trans;
-  	},
+App.ApplicationRoute = Em.Route.extend({
   	actions: {
   		lang: function(lang) {
   			App.getTranslation(lang).then(function(){
-	  			Object.keys(App.Trans).forEach(function(key){
-	  				App.Trans.notifyPropertyChange(key);
-	  			});  				
+				$.each(Ember.View.views, function( i, view ) {
+					if (view.renderedName === "application"){
+						view.rerender();
+					}
+				});
+				//route.transitionTo('loading');
+				route.transitionTo("index");
   			});
   		}
   	}
 });
 
-// App.WRoute = Em.Route.extend({
-// 	model: function() {
-//     	return App.Trans;
-//   	},
-// });
+Em.Handlebars.registerHelper('i18n', function(value, options){
+	var params = options.hash,
+    	self = this;
 
-App.ApplicationRoute = Em.Route.extend(App.Translatable, {
+	Object.keys(params).forEach(function (key) {
+  		params[key] = Em.Handlebars.get(self, params[key], options);
+	});
+
+	return App.get('i18n')(value, params);
 });
-
-App.IndexRoute = Em.Route.extend(App.Translatable, {});
-App.PageRoute = Em.Route.extend(App.Translatable, {
-	model: function(){
-		return {
-			page: "Hello from page model"
-		}
-	}
-});
-
-Em.Handlebars.registerBoundHelper('i18n', function(value, options){
-  var params = options.hash,
-      self = this;
-
-  Object.keys(params).forEach(function (key) {
-  	if (key !== 'boundOptions') {
-    	params[key] = Em.Handlebars.get(self, params[key], options);
-    }
-  });
-
-  return App.get('i18n')(value, params);
-}, App.Trans);

@@ -8,8 +8,8 @@
 </head>
 <body>
   <script type="text/x-handlebars">
-    <h2>{{i18n wel lang="Тимбуктиу"}}</h2>
-
+    <h2>{{i18n 'wel' lang=param}}</h2>
+    <h1>{{param}}</h1>
     <button {{action "lang" 'en'}}>Switch en</button>
     <button {{action "lang" 'de'}}>Switch de</button>
     {{outlet}}
@@ -17,9 +17,9 @@
 
   <script type="text/x-handlebars" id="index">
     Yo
-    <p>{{i18n test1}}</p> 
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test3}}</p>
+    <p>{{i18n 'test1'}}</p>
+    <p>{{i18n 'test2'}}</p>
+    <p>{{i18n 'test3'}}</p>
 
     <p>{{i18n test1}}</p>
     {{#link-to 'page' '1'}}link{{/link-to}}
@@ -27,51 +27,10 @@
 
   <script type="text/x-handlebars" id="page">
     {{page}}
-    <p>{{i18n test2}}</p>
+    <p>{{i18n 'test2'}}</p>
 
-    <p>{{i18n test1}}</p>
+    <p>{{i18n 'test1'}}</p>
     {{#link-to 'index'}}link{{/link-to}}
-
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
-    <p>{{i18n test2}}</p>
-    <p>{{i18n test1}}</p>
   </script>
 
   <script src="bower_components/i18next/i18next.js"></script>
